@@ -3,8 +3,8 @@ package main
 import "core:bytes"
 import "core:fmt"
 import "core:net"
+import "core:os"
 import "core:strings"
-
 
 main :: proc() {
 	SEVER_HOST := net.IP4_Address{0, 0, 0, 0}
@@ -17,15 +17,16 @@ main :: proc() {
 	}
 	defer net.close(socket)
 
+	running := true
+
+
 	for {
 
 		client_socket, client_endpoint, client_err := net.accept_tcp(socket)
-		if err != nil {
+		if client_err != nil {
 			fmt.println("Error accepting connection", client_err)
 			continue
 		}
-
-		defer net.close(client_socket)
 
 		handle_client(client_socket)
 
@@ -44,7 +45,7 @@ handle_client :: proc(client: net.TCP_Socket) {
 
 	response := strings.concatenate(
 		[]string {
-			"HTTP1.1 200OK\r\n",
+			"HTTP1.1 200 OK\r\n",
 			"Content-Type: text/html\r\n",
 			"Connection: close\r\n\r\n",
 			"<html><body>Web server is running</body></html>",
