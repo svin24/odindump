@@ -23,6 +23,7 @@ Chip8 :: struct {
 	stack:       [16]u16,
 	sp:          u16, // stack pointer
 	key:         [16]u8, // keys
+    draw_flag: bool
 }
 
 chip8: Chip8
@@ -38,7 +39,18 @@ main :: proc() {
 	rl.SetTargetFPS(60)
 
 	for !rl.WindowShouldClose() {
-
-
+        if chip8.draw_flag {
+            chip8.draw_flag = false
+            
+            rl.BeginDrawing()
+            rl.ClearBackground(rl.BLACK)
+            // Your pixel drawing code goes here later
+            rl.EndDrawing()
+        } else {
+            // Important: still call Begin/EndDrawing even if you skip graphics
+            rl.BeginDrawing()
+            rl.ClearBackground(rl.BLACK)
+            rl.EndDrawing()
+        }
 	}
 }
