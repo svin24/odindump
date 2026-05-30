@@ -17,7 +17,7 @@ Chip8 :: struct {
 	v:           [16]u8, // registers v0-vf
 	i:           u16, // index register
 	pc:          u16,
-	graphics:    [CHIP_WIDTH*CHIP_HEIGHT]u8,
+	graphics:    [CHIP8_WIDTH * CHIP8_HEIGHT]u8,
 	delay_timer: u8,
 	sound_timer: u8,
 	stack:       [16]u16,
@@ -25,20 +25,20 @@ Chip8 :: struct {
 	key:         [16]u8, // keys
 }
 
-chip8 :Chip8
+chip8: Chip8
 
 main :: proc() {
-    rl.InitWindow(
-        CHIP8_WIDTH*DISPLAY_SCALE,
-        CHIP8_HEIGHT*DISPLAY_SCALE,
-        "Bee's Chip8 emulator"
-    )
-    defer rl.CloseWindow()
+	rl.InitWindow(
+		CHIP8_WIDTH * DISPLAY_SCALE,
+		CHIP8_HEIGHT * DISPLAY_SCALE,
+		"Bee's Chip8 emulator",
+	)
+	defer rl.CloseWindow()
 
-    rl.SetTargetFPS(60)
+	rl.SetTargetFPS(60)
 
-    for !rl.WindowShouldClose(){
+	for !rl.WindowShouldClose() {
 
-        
-    }
+
+	}
 }
