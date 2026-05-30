@@ -16,7 +16,7 @@
             "command": "odin",
             "args": [
                 "build",
-                ".",
+                "./src",
                 "-debug",
                 "-out:build/debug"
             ],
