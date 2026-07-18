@@ -66,12 +66,12 @@ Chip8_Glyphs :: [16][5]u8 {
 	//F
 	{0b11110000, 0b10000000, 0b11110000, 0b10000000, 0b10000000},
 }
-glyphs:=Chip8_Glyphs
+glyphs := Chip8_Glyphs
 
 chip8_init :: proc() {
 	// initialization of chip8
 	chip8.pc = 0x200
-	for i := 0 ; i<16 ; i+=1 do chip8.v[i] = 0
+	for i := 0; i < 16; i += 1 do chip8.v[i] = 0
 
 	// Copy the glyphs into memory
 	for digit := 0; digit < 16; digit += 1 {
@@ -79,17 +79,28 @@ chip8_init :: proc() {
 	}
 }
 
-chip8_rom_load :: proc () {
+chip8_rom_load :: proc() {
 	data, err := os.read_entire_file("./rom/1-chip8-logo.ch8", context.allocator)
 	if err != nil {
 		fmt.println("Failed to load ROM: ", err)
 		return
 	}
-	defer delete (data)
+	defer delete(data)
 
 	for i := 0; i < len(data); i += 1 {
 		chip8.memory[0x200 + i] = data[i]
 	}
+}
+
+chip8_decode_opcode :: proc() {
+	fmt.println("unfinished")
+}
+
+
+chip8_read_loop :: proc() {
+	chip8.opcode = u16(chip8.memory[chip8.pc]) << 8 | u16(chip8.memory[chip8.pc + 1])
+	chip8_decode_opcode()
+	chip8.pc += 2
 }
 
 main :: proc() {
@@ -106,6 +117,7 @@ main :: proc() {
 	rl.SetTargetFPS(60)
 
 	for !rl.WindowShouldClose() {
+		chip8_read_loop()
 		if chip8.draw_flag {
 			chip8.draw_flag = false
 
