@@ -3,3 +3,4 @@ build/
 *.epub
 *.pdf
 rom/
+.direnv/
