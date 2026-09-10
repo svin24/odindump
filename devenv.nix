@@ -1,7 +1,4 @@
 { pkgs, ... }:
 {
-  packages = with pkgs; [
-    odin
-    ols
-  ];
+  languages.odin.enable = true;
 }
